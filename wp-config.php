@@ -8,7 +8,7 @@
  *
  * This file contains the following configurations:
  *
- * * MySQL settings
+ * * Database settings
  * * Secret keys
  * * Database table prefix
  * * ABSPATH
@@ -39,14 +39,14 @@ if (!function_exists('getenv_docker')) {
 	}
 }
 
-// ** MySQL settings - You can get this info from your web host ** //
+// ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', getenv_docker('WORDPRESS_DB_NAME', 'wordpress') );
 
-/** MySQL database username */
+/** Database username */
 define( 'DB_USER', getenv_docker('WORDPRESS_DB_USER', 'example username') );
 
-/** MySQL database password */
+/** Database password */
 define( 'DB_PASSWORD', getenv_docker('WORDPRESS_DB_PASSWORD', 'example password') );
 
 /**
@@ -55,7 +55,7 @@ define( 'DB_PASSWORD', getenv_docker('WORDPRESS_DB_PASSWORD', 'example password'
  * (However, using "example username" and "example password" in your database is strongly discouraged.  Please use strong, random credentials!)
  */
 
-/** MySQL hostname */
+/** Database hostname */
 define( 'DB_HOST', getenv_docker('WORDPRESS_DB_HOST', 'mysql') );
 
 /** Database charset to use in creating database tables. */
@@ -75,14 +75,14 @@ define( 'DB_COLLATE', getenv_docker('WORDPRESS_DB_COLLATE', '') );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         getenv_docker('WORDPRESS_AUTH_KEY',         '7179abb43457cff95f20d9f981b0603d1e97c5af') );
-define( 'SECURE_AUTH_KEY',  getenv_docker('WORDPRESS_SECURE_AUTH_KEY',  'b83b82c16edd16964302946e39f7a34ecc24f14f') );
-define( 'LOGGED_IN_KEY',    getenv_docker('WORDPRESS_LOGGED_IN_KEY',    '0080e5c7d1ce1cdeefd6b84604d07eb08590440c') );
-define( 'NONCE_KEY',        getenv_docker('WORDPRESS_NONCE_KEY',        '99f6092973c1f366ee318f646f1c8adb97ef94b9') );
-define( 'AUTH_SALT',        getenv_docker('WORDPRESS_AUTH_SALT',        '8f2284b4b73e1137e060177296bfae110e5f7f86') );
-define( 'SECURE_AUTH_SALT', getenv_docker('WORDPRESS_SECURE_AUTH_SALT', '29693f189de6b4d316cf86c78bece7c92754ae4d') );
-define( 'LOGGED_IN_SALT',   getenv_docker('WORDPRESS_LOGGED_IN_SALT',   'bc4a24808223a64f8cc289e9a54c39ad84398e07') );
-define( 'NONCE_SALT',       getenv_docker('WORDPRESS_NONCE_SALT',       '16528f93e3398e868a4b8eb5541546fcedf987d8') );
+define( 'AUTH_KEY',         getenv_docker('WORDPRESS_AUTH_KEY',         '03701c5fd34b24cad66fd83c10c62bcc300d58bf') );
+define( 'SECURE_AUTH_KEY',  getenv_docker('WORDPRESS_SECURE_AUTH_KEY',  '079ba27aa3b29a1779d017de77041f30e2bba706') );
+define( 'LOGGED_IN_KEY',    getenv_docker('WORDPRESS_LOGGED_IN_KEY',    '4503ca17118171e40c8500324de5ddee97e72842') );
+define( 'NONCE_KEY',        getenv_docker('WORDPRESS_NONCE_KEY',        'eeaba6a4794539d5843862fc28c48dd6d836d0bf') );
+define( 'AUTH_SALT',        getenv_docker('WORDPRESS_AUTH_SALT',        'd7be5aafa2404cb3553afd6f7bff354a28d3a23c') );
+define( 'SECURE_AUTH_SALT', getenv_docker('WORDPRESS_SECURE_AUTH_SALT', '9dd51ee7b2fefc81b669c24751c649357a470f02') );
+define( 'LOGGED_IN_SALT',   getenv_docker('WORDPRESS_LOGGED_IN_SALT',   '9404e76d8fdb7a22898e2bc10eaea2ecf502aaf1') );
+define( 'NONCE_SALT',       getenv_docker('WORDPRESS_NONCE_SALT',       'c8228baf4af0e43bfe522ed4b49cd0f862970ffc') );
 // (See also https://wordpress.stackexchange.com/a/152905/199287)
 
 /**#@-*/
@@ -112,8 +112,8 @@ define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', '') );
 /* Add any custom values between this line and the "stop editing" line. */
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
-// see also http://codex.wordpress.org/Administration_Over_SSL#Using_a_Reverse_Proxy
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+// see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
 	$_SERVER['HTTPS'] = 'on';
 }
 // (we include this by default because reverse proxying is extremely common in container environments)
@@ -130,4 +130,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Sets up WordPress vars and included files. */
+define( 'UPLOADS', 'wp-content/uploads' );
 require_once ABSPATH . 'wp-settings.php';
+
+
+define('FS_METHOD', 'direct');
